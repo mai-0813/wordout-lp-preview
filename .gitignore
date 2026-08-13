@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# VS Code (ignore all, then keep Copilot-related shared settings)
+.vscode/*
+!.vscode/settings.json
+
+# Logs
+*.log

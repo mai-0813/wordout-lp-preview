@@ -1,0 +1,23 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cd /Users/meitec-yagisawa/github/wordout-lp-preview && python3 - <<'PY'\nimport re, base64\nfrom pathlib import Path\nroot = Path\\('\\.'\\)\nhtml = root/'index\\.html'\ntext = html\\.read_text\\('utf-8'\\)\npattern = re\\.compile\\(r'src=\"\\(data:image/\\[\\^\"\\]\\+\\)\"'\\)\nuris = \\[\\]\nseen = set\\(\\)\nfor uri in pattern\\.findall\\(text\\):\n    if uri not in seen:\n        seen\\.add\\(uri\\)\n        uris\\.append\\(uri\\)\nprint\\(f'Found \\{len\\(uris\\)\\} unique data URIs'\\)\nout_dir = root/'img'\nout_dir\\.mkdir\\(exist_ok=True\\)\nfor i, uri in enumerate\\(uris, 1\\):\n    header, data_part = uri\\.split\\(',', 1\\)\n    media = header\\[len\\('data:'\\):\\]\n    if ';base64' in media:\n        mime = media\\.split\\(';', 1\\)\\[0\\]\n        ext = mime\\.split\\('/'\\)\\[-1\\]\n        if ext == 'jpeg':\n            ext = 'jpg'\n        raw = base64\\.b64decode\\(data_part\\)\n    else:\n        # URL-encoded data URI fallback\n        import urllib\\.parse\n        raw = urllib\\.parse\\.unquote_to_bytes\\(data_part\\)\n        mime = media\n        ext = mime\\.split\\('/'\\)\\[-1\\]\n        if ext == 'jpeg':\n            ext = 'jpg'\n    filename = f'asset_\\{i\\}\\.\\{ext\\}'\n    \\(out_dir / filename\\)\\.write_bytes\\(raw\\)\n    text = text\\.replace\\(uri, f'src=\"img/\\{filename\\}\"'\\)\nhtml\\.write_text\\(text, encoding='utf-8'\\)\nprint\\('Replaced in html'\\)\nfor path in sorted\\(out_dir\\.iterdir\\(\\)\\):\n    print\\(path\\.name\\)\nPY$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/meitec-yagisawa/github/wordout-lp-preview && python3 - <<'PY'\nfrom pathlib import Path\nimport re\nhtml_path = Path\\('index\\.html'\\)\ntext = html_path\\.read_text\\(encoding='utf-8'\\)\nmatch = re\\.search\\(r'<style\\\\s\\+id=\"wordout-styles\">\\(\\.\\*\\?\\)</style>', text, re\\.S\\)\nif not match:\n    raise SystemExit\\('style block not found'\\)\ncss = match\\.group\\(1\\)\ncss_path = Path\\('styles\\.css'\\)\ncss_path\\.write_text\\(css, encoding='utf-8'\\)\nnew_html = text\\[:match\\.start\\(\\)\\] \\+ '<link rel=\"stylesheet\" href=\"styles\\.css\" />' \\+ text\\[match\\.end\\(\\):\\]\nhtml_path\\.write_text\\(new_html, encoding='utf-8'\\)\nprint\\(f'Extracted CSS to \\{css_path\\} \\(\\{len\\(css\\)\\} chars\\)'\\)\nprint\\('Updated HTML link tag'\\)\nPY\n$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^node --check js/site\\.js && node --check js/hero-toggle\\.js && node --check js/feature-lightbox\\.js && node --check js/header\\.js && node --check js/format-slider\\.js && echo 'JS syntax OK'$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^node --check js/utils\\.js && node --check js/site\\.js && node --check js/hero-toggle\\.js && node --check js/feature-lightbox\\.js && node --check js/header\\.js && node --check js/format-slider\\.js && echo 'JS syntax OK'$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "mkdir": true,
+        "mv": true,
+        "git check-ignore": true
+    }
+}
