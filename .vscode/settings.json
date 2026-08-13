@@ -18,6 +18,8 @@
         },
         "mkdir": true,
         "mv": true,
-        "git check-ignore": true
+        "git check-ignore": true,
+        "git remote": true,
+        "git push": true
     }
 }
