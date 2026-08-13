@@ -17,9 +17,13 @@
             "matchCommandLine": true
         },
         "mkdir": true,
-        "mv": true,
-        "git check-ignore": true,
-        "git remote": true,
-        "git push": true
-    }
-}
+        {
+            "chat.tools.terminal.autoApprove": {
+                "mkdir": true,
+                "mv": true,
+                "git check-ignore": true,
+                "git remote": true,
+                "git push": true
+            }
+        }
+            "approve": true,
